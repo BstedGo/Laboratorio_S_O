@@ -1,0 +1,99 @@
+int const LED1 = 11;
+int const LED2 = 12;
+int const LED3 = 13;
+int const botonPin = 10;
+
+
+int estado = 1;            
+bool botonPresionado = false;
+
+
+void setup() {
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+  pinMode(botonPin, INPUT_PULLUP);
+
+
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, LOW);
+  digitalWrite(LED3, LOW);
+}
+
+
+void loop() {
+  if (digitalRead(botonPin) == LOW && !botonPresionado) {
+    botonPresionado = true;
+
+
+    if (estado == 8) {
+     
+      estado = 0;
+      ejecutarAccion();
+    } else {
+      ejecutarAccion();
+      estado++;
+      if (estado > 8) {
+        estado = 0;
+      }
+    }
+
+
+    delay(200);
+  }
+
+
+  if (digitalRead(botonPin) == HIGH) {
+    botonPresionado = false;
+  }
+
+
+
+
+  if (estado == 8) {
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, HIGH);
+    delay(300);
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+    delay(300);
+  }
+}
+
+
+void ejecutarAccion() {
+  switch (estado) {
+    case 0:
+      digitalWrite(LED1, HIGH);
+      break;
+    case 1:
+      digitalWrite(LED1, LOW);
+      break;
+    case 2:
+      digitalWrite(LED2, HIGH);
+      break;
+    case 3:
+      digitalWrite(LED2, LOW);
+      break;
+    case 4:
+      digitalWrite(LED3, HIGH);
+      break;
+    case 5:
+      digitalWrite(LED3, LOW);
+      break;
+    case 6: // Todos encendidos
+      digitalWrite(LED1, HIGH);
+      digitalWrite(LED2, HIGH);
+      digitalWrite(LED3, HIGH);
+      break;
+    case 7: // Todos apagados
+      digitalWrite(LED1, LOW);
+      digitalWrite(LED2, LOW);
+      digitalWrite(LED3, LOW);
+      break;
+    case 8:
+      break;
+  }
+}
